@@ -3,35 +3,46 @@
 <head>
 
 <!-- PWA -->
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-<link rel="apple-touch-icon" href="icon-512.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0d47a1">
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Controle de Férias</title>
 
 <style>
+/* ===== BODY ===== */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    padding: 20px;
-    background: #f7f9fc;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #e3f2fd, #ffffff);
     color: #333;
+    padding: 20px;
 }
 
+/* ===== TÍTULO ===== */
 h2 {
     text-align: center;
     color: #0d47a1;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    font-size: 28px;
+    font-weight: 600;
 }
 
+/* ===== BOXES ===== */
 .box {
     background: #fff;
-    border-radius: 8px;
-    padding: 15px;
+    border-radius: 12px;
+    padding: 20px;
     margin-top: 20px;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.box:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
 }
 
+/* ===== FORM CONTROLS ===== */
 .controls {
     display: flex;
     flex-wrap: wrap;
@@ -39,101 +50,137 @@ h2 {
     align-items: flex-end;
     margin-top: 10px;
 }
-
 .campo {
     display: flex;
     flex-direction: column;
     flex: 1;
-    min-width: 120px;
+    min-width: 140px;
 }
-
 label {
     font-size: 13px;
     font-weight: 600;
-    margin-bottom: 4px;
+    margin-bottom: 5px;
+    color: #0d47a1;
 }
-
 input, select, button {
-    padding: 8px 10px;
+    padding: 8px 12px;
     border: 1px solid #ccc;
-    border-radius: 6px;
+    border-radius: 8px;
     font-size: 14px;
     outline: none;
-    transition: all 0.2s;
+    transition: all 0.3s ease;
 }
-
 input:focus, select:focus {
     border-color: #0d47a1;
-    box-shadow: 0 0 5px rgba(13,71,161,0.3);
+    box-shadow: 0 0 8px rgba(13,71,161,0.3);
 }
 
+/* ===== BOTÕES ===== */
 button {
     background: #0d47a1;
     color: #fff;
     cursor: pointer;
     border: none;
     font-weight: 600;
+    border-radius: 8px;
+    padding: 10px 14px;
 }
-
 button:hover {
-    background: #1565c0;
+    background: #d2fcf8;
 }
 
+/* ===== TABELA ===== */
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 15px;
+    margin-top: 20px;
     background: #fff;
-    border-radius: 8px;
+    border-radius: 12px;
     overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
 }
-
 th, td {
     border-bottom: 1px solid #e0e0e0;
-    padding: 10px;
+    padding: 12px;
     text-align: center;
+    font-size: 14px;
 }
-
 th {
     background: #e3f2fd;
     font-weight: 600;
+    color: #0d47a1;
 }
-
 tr:hover {
     background: #f1f8ff;
 }
-
 .hoje {
     background: #0d47a1 !important;
     color: #fff;
     font-weight: bold;
 }
 
-.proximos-container {
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-}
-
-.proximo-card {
-    background: #e3f2fd;
-    border-radius: 8px;
-    padding: 10px;
-    min-width: 180px;
-    text-align: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
+/* ===== CHIPS ===== */
 .chip {
     display: inline-block;
-    padding: 4px 10px;
+    padding: 5px 12px;
     margin: 2px 2px;
     border-radius: 15px;
     color: #fff;
     font-size: 12px;
+    font-weight: 600;
+    transition: transform 0.2s;
+}
+.chip:hover {
+    transform: scale(1.05);
+}
+
+/* ===== PRÓXIMOS A TIRAR FÉRIAS ===== */
+.proximos-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+.proximo-card {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background: linear-gradient(135deg, #0d47a1, #42a5f5);
+    color: #fff;
+    border-radius: 12px;
+    padding: 12px;
+    min-width: 180px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-align: center;
+}
+.proximo-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
+.proximo-card .chip {
+    margin-bottom: 5px;
+}
+
+/* ===== AVATAR OPCIONAL ===== */
+.avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 600px) {
+    .controls { flex-direction: column; }
+    .proximo-card { min-width: 100%; }
 }
 </style>
+
 </head>
 
 <body>
@@ -161,6 +208,7 @@ tr:hover {
             <button id="btnLogin">Entrar</button>
             <button id="btnLogout">Sair</button>
         </div>
+
 
         <div id="statusLogin" style="margin-top:5px;font-weight:bold;color:#0d47a1"></div>
     </div>
@@ -209,12 +257,18 @@ tr:hover {
     </div>
 
     <div class="campo">
-        <label>Retorno de férias</label>
-        <input type="date" id="retorno" disabled>
+        <label>Compensação de feriados</label>
+        <input type="text" id="compensacao" disabled>
     </div>
 
     <button id="btnSalvar">Marcar Férias</button>
     <button id="btnCancelar">Cancelar edição</button>
+</div>
+
+<!-- PRÓXIMA PESSOA A RETORNAR -->
+<div class="box">
+    <h3>Próxima pessoa a retornar de férias</h3>
+    <div id="proximoRetorno" style="font-weight:bold; color:#0d47a1;"></div>
 </div>
 
 <div class="box proximo">
@@ -260,7 +314,7 @@ const fimInput = document.getElementById("fim");
 const temFeriado = document.getElementById("temFeriado");
 const qtdFeriado = document.getElementById("qtdFeriado");
 const campoQtdFeriado = document.getElementById("campoQtdFeriado");
-const retornoInput = document.getElementById("retorno");
+const compensacaoInput = document.getElementById("compensacao");
 
 const tabela = document.getElementById("tabela");
 const listaPessoas = document.getElementById("listaPessoas");
@@ -288,10 +342,9 @@ document.getElementById("btnCancelar").onclick = cancelarEdicao;
 
 temFeriado.onchange = () => {
     campoQtdFeriado.style.display = temFeriado.value === "sim" ? "flex" : "none";
-    calcularRetorno();
+    calcularCompensacao();
 };
-fimInput.onchange = calcularRetorno;
-qtdFeriado.oninput = calcularRetorno;
+qtdFeriado.oninput = calcularCompensacao;
 
 filtroDisponivel.onchange = aplicarFiltro;
 
@@ -343,14 +396,13 @@ function formatarDataAbreviada(d) {
     return `${dia}/${mes}/${ano}`;
 }
 
-function calcularRetorno() {
-    if (!fimInput.value) return;
-
-    let data = criarDataLocal(fimInput.value);
+function calcularCompensacao() {
     if (temFeriado.value === "sim") {
-        data.setDate(data.getDate() + Number(qtdFeriado.value || 0));
+        const qtd = Number(qtdFeriado.value || 0);
+        compensacaoInput.value = `Compensação: ${qtd} dia${qtd > 1 ? "s" : ""}`;
+    } else {
+        compensacaoInput.value = "Sem compensação";
     }
-    retornoInput.value = data.toISOString().split("T")[0];
 }
 
 function capitalizarNome(v) {
@@ -403,13 +455,12 @@ function salvarFerias() {
     if (!nome || !inicio || !fim) return alert("Preencha tudo");
     if (fim < inicio) return alert("Data final menor que inicial");
 
-    calcularRetorno();
+    calcularCompensacao();
 
     const registro = {
         nome, inicio, fim,
         feriado: temFeriado.value === "sim",
-        qtdFeriado: temFeriado.value === "sim" ? Number(qtdFeriado.value) : 0,
-        retorno: retornoInput.value
+        qtdFeriado: temFeriado.value === "sim" ? Number(qtdFeriado.value) : 0
     };
 
     if (indiceEdicao !== null) {
@@ -438,7 +489,6 @@ function renderizar() {
             if (tr.dataset.data >= p.inicio && tr.dataset.data <= p.fim) {
                 tr.style.background = corClara(corPessoa(p.nome));
 
-                // Acumula nomes sem sobrescrever
                 const chip = `<span class="chip" style="background:${corPessoa(p.nome)}">${p.nome}</span>`;
                 if (tr.cells[2].innerHTML.includes("FÉRIAS")) {
                     tr.cells[2].innerHTML += " " + chip;
@@ -455,14 +505,15 @@ function renderizar() {
         <li>
             <span class="chip" style="background:${corPessoa(p.nome)}">${p.nome}</span>
             ${formatarDataAbreviada(p.inicio)} → ${formatarDataAbreviada(p.fim)}
-            | <b>Retorno:</b> ${formatarDataAbreviada(p.retorno)}
+            | <b>Compensação:</b> ${p.feriado ? p.qtdFeriado : 0} dia${p.qtdFeriado !== 1 ? "s" : ""}
             ${isAdmin ? `<button onclick="editar(${i})">✏️</button>
                          <button onclick="excluir(${i})">❌</button>` : ""}
         </li>`;
     });
 
     atualizarProximos();
-    aplicarFiltro(); // Aplica filtro sempre que renderiza
+    atualizarProximoRetorno();
+    aplicarFiltro();
 }
 
 function editar(i) {
@@ -475,7 +526,7 @@ function editar(i) {
     temFeriado.value = p.feriado ? "sim" : "nao";
     qtdFeriado.value = p.qtdFeriado || 1;
     campoQtdFeriado.style.display = p.feriado ? "flex" : "none";
-    retornoInput.value = p.retorno;
+    calcularCompensacao();
 }
 
 function excluir(i) {
@@ -504,15 +555,41 @@ function atualizarProximos() {
         </div>`).join("");
 }
 
+/* ===== PRÓXIMA PESSOA A RETORNAR ===== */
+function atualizarProximoRetorno() {
+    // Filtra pessoas que ainda estão de férias
+    const emFerias = pessoas.filter(p => criarDataLocal(p.fim) >= hoje);
+
+    if (emFerias.length === 0) {
+        document.getElementById("proximoRetorno").innerText = "Ninguém retornando em breve";
+        return;
+    }
+
+    // Ordena pelo fim das férias (mais próximo primeiro)
+    emFerias.sort((a,b) => criarDataLocal(a.fim) - criarDataLocal(b.fim));
+
+    // Pega as 2 primeiras pessoas
+    const proximos = emFerias.slice(0, 2);
+
+    const textos = proximos.map(p => {
+        const diasRestantes = Math.ceil((criarDataLocal(p.fim) - hoje) / (1000*60*60*24));
+        return `${p.nome} retorna em ${diasRestantes} dia${diasRestantes !== 1 ? "s" : ""} (${formatarDataAbreviada(p.fim)})`;
+    });
+
+    document.getElementById("proximoRetorno").innerText = textos.join(" | ");
+}
+
+
 function cancelarEdicao() {
     indiceEdicao = null;
     limpar();
 }
 
 function limpar() {
-    nomeInput.value = inicioInput.value = fimInput.value = retornoInput.value = "";
+    nomeInput.value = inicioInput.value = fimInput.value = "";
     temFeriado.value = "nao";
     campoQtdFeriado.style.display = "none";
+    calcularCompensacao();
 }
 
 /* ===== FILTRO ===== */
@@ -532,6 +609,7 @@ function aplicarFiltro() {
 
 /* INIT */
 renderizar();
+calcularCompensacao();
 
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("sw.js");
