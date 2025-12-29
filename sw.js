@@ -1,4 +1,4 @@
-const CACHE_NAME = "controle-ferias-v2";
+const CACHE_NAME = "controle-ferias-v3";
 const urlsToCache = [
     "./",
     "./index.html",
