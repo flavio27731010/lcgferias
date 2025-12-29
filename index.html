@@ -11,20 +11,128 @@
 <title>Controle de Férias</title>
 
 <style>
-body { font-family: Arial, sans-serif; padding: 15px; }
-.controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; }
-.campo { display: flex; flex-direction: column; }
-label { font-size: 12px; font-weight: bold; }
-input, select, button { padding: 6px; }
-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-th, td { border: 1px solid #ccc; padding: 6px; text-align: center; }
-th { background: #f0f0f0; }
-.hoje { background: #0d47a1 !important; color: white; font-weight: bold; }
-.box { border: 1px solid #ccc; padding: 10px; margin-top: 15px; }
-.proximo { background: #e3f2fd; border-left: 6px solid #0d47a1; }
-.proximos-container { display: flex; gap: 10px; flex-wrap: wrap; }
-.proximo-card { background: white; border: 1px solid #bbb; padding: 8px; min-width: 180px; border-radius: 4px; text-align: center; }
-.chip { display: inline-block; padding: 3px 8px; margin: 2px; border-radius: 12px; color: white; font-size: 12px; font-weight: bold; }
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 20px;
+    background: #f7f9fc;
+    color: #333;
+}
+
+h2 {
+    text-align: center;
+    color: #0d47a1;
+    margin-bottom: 20px;
+}
+
+.box {
+    background: #fff;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 20px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: flex-end;
+    margin-top: 10px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 120px;
+}
+
+label {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+input, select, button {
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s;
+}
+
+input:focus, select:focus {
+    border-color: #0d47a1;
+    box-shadow: 0 0 5px rgba(13,71,161,0.3);
+}
+
+button {
+    background: #0d47a1;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    font-weight: 600;
+}
+
+button:hover {
+    background: #1565c0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background: #e3f2fd;
+    font-weight: 600;
+}
+
+tr:hover {
+    background: #f1f8ff;
+}
+
+.hoje {
+    background: #0d47a1 !important;
+    color: #fff;
+    font-weight: bold;
+}
+
+.proximos-container {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.proximo-card {
+    background: #e3f2fd;
+    border-radius: 8px;
+    padding: 10px;
+    min-width: 180px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.chip {
+    display: inline-block;
+    padding: 4px 10px;
+    margin: 2px 2px;
+    border-radius: 15px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+}
 </style>
 </head>
 
