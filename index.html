@@ -4,6 +4,7 @@
 
 <link rel="icon" href="icon-192.png">
 
+<!-- PWA -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0d47a1">
 
@@ -12,26 +13,339 @@
 <title>Controle de Férias</title>
 
 <style>
-/* === TODO O SEU CSS ORIGINAL — NÃO ALTERADO === */
-body{font-family:'Poppins',sans-serif;background:linear-gradient(135deg,#e3f2fd,#fff);padding:20px}
-h2{text-align:center;color:#0d47a1}
-.status{position:fixed;bottom:15px;right:15px;padding:8px 14px;border-radius:20px;color:#fff;font-weight:600}
-.status.online{background:#2e7d32}
-.status.offline{background:#c62828}
-.status.sync{background:#f9a825;color:#000}
+/* ===== BODY ===== */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #e3f2fd, #ffffff);
+    color: #333;
+    padding: 20px;
+}
+
+/* ===== TÍTULO ===== */
+h2 {
+    text-align: center;
+    color: #0d47a1;
+    margin-bottom: 25px;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+/* ===== BOXES ===== */
+.box {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.box:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+/* ===== FORM CONTROLS ===== */
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: flex-end;
+    margin-top: 10px;
+}
+.campo {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 140px;
+}
+label {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #0d47a1;
+}
+input, select, button {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+input:focus, select:focus {
+    border-color: #0d47a1;
+    box-shadow: 0 0 8px rgba(13,71,161,0.3);
+}
+
+/* ===== BOTÕES ===== */
+button {
+    background: #0d47a1;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 10px 14px;
+    transition: background 0.3s ease;
+}
+button:hover {
+    background: #42a5f5;
+}
+
+/* ===== TABELA ===== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+}
+th, td {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 12px;
+    text-align: center;
+    font-size: 14px;
+}
+th {
+    background: #e3f2fd;
+    font-weight: 600;
+    color: #0d47a1;
+}
+tr:hover {
+    background: #f1f8ff;
+}
+.hoje {
+    background: #0d47a1 !important;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* ===== CHIPS ===== */
+.chip {
+    display: inline-block;
+    padding: 5px 12px;
+    margin: 2px 2px;
+    border-radius: 15px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    transition: transform 0.2s;
+}
+.chip:hover {
+    transform: scale(1.05);
+}
+
+/* ===== PRÓXIMOS A TIRAR FÉRIAS ===== */
+.box.proximo {
+    padding: 15px;
+    overflow-x: auto; /* evita que cartões saiam da margem */
+}
+
+.proximos-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: flex-start;
+}
+
+.proximo-card {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background: linear-gradient(135deg, #0d47a1, #42a5f5);
+    color: #fff;
+    border-radius: 12px;
+    padding: 12px;
+    min-width: 180px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-align: center;
+    box-sizing: border-box; /* evita estouro de largura */
+}
+.proximo-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
+.proximo-card .chip {
+    margin-bottom: 5px;
+}
+
+/* ===== AVATAR OPCIONAL ===== */
+.avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 600px) {
+    .controls { 
+        flex-direction: column; 
+        align-items: stretch; /* cada campo ocupa toda largura */
+    }
+    .campo {
+        flex: none; /* desativa flex:1 */
+        width: 100%; /* ocupa 100% do container */
+    }
+    .proximo-card {
+        min-width: 100%; /* cada cartão ocupa toda a largura da box */
+    }
+}
+
+.status {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  z-index: 9999;
+  box-shadow: 0 4px 10px rgba(0,0,0,.15);
+  transition: background .3s, transform .3s;
+}
+
+.status.online {
+  background: #2e7d32;
+}
+
+.status.offline {
+  background: #c62828;
+}
+
+.status.sync {
+  background: #f9a825;
+  color: #000;
+}
+
+
 </style>
 
 </head>
+
 <body>
 
-<div id="status-connection" class="status online">🟢 Online</div>
+  <!-- 🔔 Indicador de conexão -->
+  <div id="status-connection" class="status online">
+    🟢 Online
+  </div>
 
 <h2>CONTROLE DE FÉRIAS</h2>
 
-<!-- TODO O HTML VISUAL ORIGINAL PERMANECE IGUAL -->
-<!-- (removido aqui só para não repetir 600 linhas, mas você mantém exatamente o seu HTML) -->
+<!-- ADMIN -->
+<div class="box">
+    <button id="btnMostrarAdmin">🔐 Entrar como administrador</button>
 
-<!-- ⚠️ IMPORTAÇÃO FIRESTORE -->
+    <div id="loginAdmin" style="display:none;margin-top:10px;">
+        <h3>Login Administrador</h3>
+
+        <div class="controls">
+            <div class="campo">
+                <label>Usuário</label>
+                <input type="text" id="usuario">
+            </div>
+
+            <div class="campo">
+                <label>Senha</label>
+                <input type="password" id="senha">
+            </div>
+
+            <button id="btnLogin">Entrar</button>
+            <button id="btnLogout">Sair</button>
+        </div>
+
+
+        <div id="statusLogin" style="margin-top:5px;font-weight:bold;color:#0d47a1"></div>
+    </div>
+</div>
+
+<!-- FILTRO DE DATAS -->
+<div class="controls">
+    <div class="campo">
+        <label>Filtrar Status</label>
+        <select id="filtroDisponivel">
+            <option value="todos">Todos</option>
+            <option value="disponivel">Disponíveis</option>
+            <option value="ferias">Em Férias</option>
+        </select>
+    </div>
+</div>
+
+<!-- FORM -->
+<div class="controls">
+    <div class="campo">
+        <label>Nome*</label>
+        <input type="text" id="nome">
+    </div>
+
+    <div class="campo">
+        <label>Data inicial*</label>
+        <input type="date" id="inicio">
+    </div>
+
+    <div class="campo">
+        <label>Data final*</label>
+        <input type="date" id="fim">
+    </div>
+
+    <div class="campo">
+        <label>Tem feriado na jornada?</label>
+        <select id="temFeriado">
+            <option value="nao">Não</option>
+            <option value="sim">Sim</option>
+        </select>
+    </div>
+
+    <div class="campo" id="campoQtdFeriado" style="display:none">
+        <label>Qtd. de feriados</label>
+        <input type="number" id="qtdFeriado" min="1" value="1">
+    </div>
+
+    <div class="campo">
+        <label>Compensação de feriados</label>
+        <input type="text" id="compensacao" disabled>
+    </div>
+
+    <button id="btnSalvar">Marcar Férias</button>
+    <button id="btnCancelar">Cancelar edição</button>
+</div>
+
+<!-- PRÓXIMA PESSOA A RETORNAR -->
+<div class="box">
+    <h3>Próxima pessoa a retornar de férias</h3>
+    <div id="proximoRetorno" style="font-weight:bold; color:#0d47a1;"></div>
+</div>
+
+<div class="box proximo">
+    <h3>Próximos a tirar férias</h3>
+    <div id="proximoFerias" class="proximos-container"></div>
+</div>
+
+<div class="box">
+    <h3>Períodos cadastrados</h3>
+    <ul id="listaPessoas" style="list-style:none;padding:0;"></ul>
+</div>
+
+<table>
+<thead>
+<tr>
+    <th>Data</th>
+    <th>Dia da Semana</th>
+    <th>Status</th>
+</tr>
+</thead>
+<tbody id="tabela"></tbody>
+</table>
+
 <script type="module">
 import {
   collection,
@@ -44,58 +358,337 @@ import {
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-const db = window.db;
-const feriasRef = collection(db, "ferias");
+window.feriasRef = collection(window.db, "ferias");
+</script>
+
+
+<script>
+/* ===== ADMINS ===== */
+const ADMINS = [
+    { user: "flavio", pass: "126683" },
+    { user: "andiara", pass: "126621" },
+    { user: "ana", pass: "124904" },
+    { user: "caio", pass: "126675" }
+];
+
+/* ===== ELEMENTOS ===== */
+const btnMostrarAdmin = document.getElementById("btnMostrarAdmin");
+const loginAdminDiv = document.getElementById("loginAdmin");
+const statusLogin = document.getElementById("statusLogin");
+const usuario = document.getElementById("usuario");
+const senha = document.getElementById("senha");
+
+const nomeInput = document.getElementById("nome");
+const inicioInput = document.getElementById("inicio");
+const fimInput = document.getElementById("fim");
+const temFeriado = document.getElementById("temFeriado");
+const qtdFeriado = document.getElementById("qtdFeriado");
+const campoQtdFeriado = document.getElementById("campoQtdFeriado");
+const compensacaoInput = document.getElementById("compensacao");
+
+const tabela = document.getElementById("tabela");
+const listaPessoas = document.getElementById("listaPessoas");
+const proximoDiv = document.getElementById("proximoFerias");
+const filtroDisponivel = document.getElementById("filtroDisponivel");
 
 /* ===== ESTADO ===== */
-let pessoas = [];
+let isAdmin = localStorage.getItem("isAdmin") === "true";
+let adminLogado = localStorage.getItem("adminLogado") || "";
+let pessoas = JSON.parse(localStorage.getItem("ferias")) || [];
 let indiceEdicao = null;
+const coresPorPessoa = JSON.parse(localStorage.getItem("coresPorPessoa")) || {};
+const feriasPorDia = {};
 
-/* ===== SALVAR ===== */
-window.salvarFerias = async function () {
-  const nome = capitalizarNome(nomeInput.value.trim());
-  const inicio = inicioInput.value;
-  const fim = fimInput.value;
-
-  if (!nome || !inicio || !fim) return alert("Preencha tudo");
-
-  await addDoc(feriasRef, {
-    nome,
-    inicio,
-    fim,
-    feriado: temFeriado.value === "sim",
-    qtdFeriado: temFeriado.value === "sim" ? Number(qtdFeriado.value) : 0,
-    criadoEm: serverTimestamp()
-  });
-
-  limpar();
+/* ===== EVENTOS ===== */
+btnMostrarAdmin.onclick = () => {
+    loginAdminDiv.style.display = "block";
+    btnMostrarAdmin.style.display = "none";
 };
 
-/* ===== CARREGAR EM TEMPO REAL ===== */
-onSnapshot(query(feriasRef, orderBy("inicio")), snap => {
-  pessoas = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-  renderizar();
-});
+document.getElementById("btnLogin").onclick = loginAdmin;
+document.getElementById("btnLogout").onclick = logoutAdmin;
+document.getElementById("btnSalvar").onclick = salvarFerias;
+document.getElementById("btnCancelar").onclick = cancelarEdicao;
 
-/* ===== EXCLUIR ===== */
-window.excluir = async function (i) {
-  if (!confirm("Excluir férias?")) return;
-  await deleteDoc(doc(db, "ferias", pessoas[i].id));
+temFeriado.onchange = () => {
+    campoQtdFeriado.style.display = temFeriado.value === "sim" ? "flex" : "none";
+    calcularCompensacao();
 };
-</script>
+qtdFeriado.oninput = calcularCompensacao;
 
-<script>
-/* === TODO SEU JAVASCRIPT ORIGINAL PERMANECE IGUAL === */
-/* Funções: renderizar(), limpar(), capitalizarNome(), etc */
-</script>
+filtroDisponivel.onchange = aplicarFiltro;
 
-<script type="module" src="firebase.js"></script>
+/* ===== LOGIN ===== */
+function loginAdmin() {
+    const u = usuario.value.trim().toLowerCase();
+    const s = senha.value;
 
-<script>
+    const ok = ADMINS.find(a => a.user === u && a.pass === s);
+    if (!ok) {
+        statusLogin.innerText = "❌ Usuário ou senha inválidos";
+        return;
+    }
+
+    isAdmin = true;
+    adminLogado = u;
+    localStorage.setItem("isAdmin", "true");
+    localStorage.setItem("adminLogado", u);
+
+    statusLogin.innerText = `✅ Logado como ${u}`;
+    renderizar();
+}
+
+function logoutAdmin() {
+    isAdmin = false;
+    adminLogado = "";
+
+    localStorage.removeItem("isAdmin");
+    localStorage.removeItem("adminLogado");
+
+    loginAdminDiv.style.display = "none";
+    btnMostrarAdmin.style.display = "block";
+    statusLogin.innerText = "🔒 Usuário comum";
+
+    renderizar();
+}
+
+/* ===== UTIL ===== */
+function criarDataLocal(d) {
+    const [a,m,di] = d.split("-");
+    return new Date(a, m-1, di);
+}
+
+function formatarDataAbreviada(d) {
+    const data = criarDataLocal(d);
+    const dia = String(data.getDate()).padStart(2, "0");
+    const mes = String(data.getMonth() + 1).padStart(2, "0");
+    const ano = data.getFullYear();
+    return `${dia}/${mes}/${ano}`;
+}
+
+function calcularCompensacao() {
+    if (temFeriado.value === "sim") {
+        const qtd = Number(qtdFeriado.value || 0);
+        compensacaoInput.value = `Compensação: ${qtd} dia${qtd > 1 ? "s" : ""}`;
+    } else {
+        compensacaoInput.value = "Sem compensação";
+    }
+}
+
+function capitalizarNome(v) {
+    return v.toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
+}
+
+function corPessoa(nome) {
+    if (!coresPorPessoa[nome]) {
+        coresPorPessoa[nome] =
+            "#" + Math.floor(Math.random()*16777215).toString(16);
+        localStorage.setItem("coresPorPessoa", JSON.stringify(coresPorPessoa));
+    }
+    return coresPorPessoa[nome];
+}
+
+function corClara(hex) {
+    const r = parseInt(hex.substr(1,2),16);
+    const g = parseInt(hex.substr(3,2),16);
+    const b = parseInt(hex.substr(5,2),16);
+    return `rgba(${r},${g},${b},0.15)`;
+}
+
+/* ===== TABELA 730 DIAS ===== */
+const hoje = new Date();
+hoje.setHours(0,0,0,0);
+
+for (let i = 0; i <= 730; i++) {
+    const d = new Date(hoje);
+    d.setDate(hoje.getDate() + i);
+    const chave = d.toISOString().split("T")[0];
+    feriasPorDia[chave] = [];
+
+    const tr = document.createElement("tr");
+    tr.dataset.data = chave;
+    if (i === 0) tr.classList.add("hoje");
+
+    tr.innerHTML = `
+        <td>${d.toLocaleDateString("pt-BR")}</td>
+        <td>${d.toLocaleDateString("pt-BR",{weekday:"long"})}</td>
+        <td>Disponível</td>`;
+    tabela.appendChild(tr);
+}
+
+/* ===== AÇÕES ===== */
+function salvarFerias() {
+    const nome = capitalizarNome(nomeInput.value.trim());
+    const inicio = inicioInput.value;
+    const fim = fimInput.value;
+
+    if (!nome || !inicio || !fim) return alert("Preencha tudo");
+    if (fim < inicio) return alert("Data final menor que inicial");
+
+    calcularCompensacao();
+
+    const registro = {
+        nome, inicio, fim,
+        feriado: temFeriado.value === "sim",
+        qtdFeriado: temFeriado.value === "sim" ? Number(qtdFeriado.value) : 0
+    };
+
+    if (indiceEdicao !== null) {
+        if (!isAdmin) return alert("Somente admin");
+        pessoas[indiceEdicao] = registro;
+        indiceEdicao = null;
+    } else {
+        pessoas.push(registro);
+    }
+
+    localStorage.setItem("ferias", JSON.stringify(pessoas));
+    renderizar();
+    limpar();
+}
+
+function renderizar() {
+    statusLogin.innerText = isAdmin ? `✅ Admin: ${adminLogado}` : "🔒 Usuário comum";
+
+    document.querySelectorAll("#tabela tr").forEach(tr => {
+        tr.style.background = "";
+        tr.cells[2].innerHTML = "Disponível";
+    });
+
+    pessoas.forEach(p => {
+        document.querySelectorAll("#tabela tr").forEach(tr => {
+            if (tr.dataset.data >= p.inicio && tr.dataset.data <= p.fim) {
+                tr.style.background = corClara(corPessoa(p.nome));
+
+                const chip = `<span class="chip" style="background:${corPessoa(p.nome)}">${p.nome}</span>`;
+                if (tr.cells[2].innerHTML.includes("FériasS")) {
+                    tr.cells[2].innerHTML += " " + chip;
+                } else {
+                    tr.cells[2].innerHTML = "Férias " + chip;
+                }
+            }
+        });
+    });
+
+    listaPessoas.innerHTML = "";
+    pessoas.forEach((p,i) => {
+        listaPessoas.innerHTML += `
+        <li>
+            <span class="chip" style="background:${corPessoa(p.nome)}">${p.nome}</span>
+            ${formatarDataAbreviada(p.inicio)} → ${formatarDataAbreviada(p.fim)}
+            | <b>Compensação:</b> ${p.feriado ? p.qtdFeriado : 0} dia${p.qtdFeriado !== 1 ? "s" : ""}
+            ${isAdmin ? `<button onclick="editar(${i})">✏️</button>
+                         <button onclick="excluir(${i})">❌</button>` : ""}
+        </li>`;
+    });
+
+    atualizarProximos();
+    atualizarProximoRetorno();
+    aplicarFiltro();
+}
+
+function editar(i) {
+    if (!isAdmin) return;
+    const p = pessoas[i];
+    indiceEdicao = i;
+    nomeInput.value = p.nome;
+    inicioInput.value = p.inicio;
+    fimInput.value = p.fim;
+    temFeriado.value = p.feriado ? "sim" : "nao";
+    qtdFeriado.value = p.qtdFeriado || 1;
+    campoQtdFeriado.style.display = p.feriado ? "flex" : "none";
+    calcularCompensacao();
+}
+
+function excluir(i) {
+    if (!isAdmin) return;
+    if (confirm("Excluir férias?")) {
+        pessoas.splice(i,1);
+        localStorage.setItem("ferias", JSON.stringify(pessoas));
+        renderizar();
+    }
+}
+
+function atualizarProximos() {
+    const futuras = pessoas.filter(p => criarDataLocal(p.inicio) >= hoje);
+    const grupos = {};
+    futuras.forEach(p => {
+        if (!grupos[p.inicio]) grupos[p.inicio] = [];
+        grupos[p.inicio].push(p.nome);
+    });
+
+    proximoDiv.innerHTML = Object.keys(grupos).slice(0,3).map(d => `
+        <div class="proximo-card">
+            ${grupos[d].map(n =>
+                `<span class="chip" style="background:${corPessoa(n)}">${n}</span>`
+            ).join("")}
+            <div><b>📅 ${criarDataLocal(d).toLocaleDateString("pt-BR")}</b></div>
+        </div>`).join("");
+}
+
+/* ===== PRÓXIMA PESSOA A RETORNAR ===== */
+function atualizarProximoRetorno() {
+    // Filtra pessoas que ainda estão de férias
+    const emFerias = pessoas.filter(p => criarDataLocal(p.fim) >= hoje);
+
+    if (emFerias.length === 0) {
+        document.getElementById("proximoRetorno").innerText = "Ninguém retornando em breve";
+        return;
+    }
+
+    // Ordena pelo fim das férias (mais próximo primeiro)
+    emFerias.sort((a,b) => criarDataLocal(a.fim) - criarDataLocal(b.fim));
+
+    // Pega as 2 primeiras pessoas
+    const proximos = emFerias.slice(0, 2);
+
+    const textos = proximos.map(p => {
+        const diasRestantes = Math.ceil((criarDataLocal(p.fim) - hoje) / (1000*60*60*24));
+        return `${p.nome} retorna em ${diasRestantes} dia${diasRestantes !== 1 ? "s" : ""} (${formatarDataAbreviada(p.fim)})`;
+    });
+
+    document.getElementById("proximoRetorno").innerText = textos.join(" | ");
+}
+
+
+function cancelarEdicao() {
+    indiceEdicao = null;
+    limpar();
+}
+
+function limpar() {
+    nomeInput.value = inicioInput.value = fimInput.value = "";
+    temFeriado.value = "nao";
+    campoQtdFeriado.style.display = "none";
+    calcularCompensacao();
+}
+
+/* ===== FILTRO ===== */
+function aplicarFiltro() {
+    const valor = filtroDisponivel.value;
+
+    document.querySelectorAll("#tabela tr").forEach(tr => {
+        if (valor === "todos") {
+            tr.style.display = "";
+        } else if (valor === "disponivel") {
+            tr.style.display = tr.cells[2].innerText.trim() === "Disponível" ? "" : "none";
+        } else if (valor === "ferias") {
+            tr.style.display = tr.cells[2].innerText.trim() !== "Disponível" ? "" : "none";
+        }
+    });
+}
+
+/* INIT */
+renderizar();
+calcularCompensacao();
+
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js");
+    navigator.serviceWorker.register("sw.js");
 }
 </script>
+
+<!-- Firebase moderno -->
+<script type="module" src="firebase.js"></script>
+
 
 </body>
 </html>
