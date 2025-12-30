@@ -1,21 +1,12 @@
 {
   "name": "Controle de Férias",
   "short_name": "Férias",
-  "description": "Gerenciamento de férias da equipe",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0d47a1",
   "theme_color": "#0d47a1",
   "icons": [
-    {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
   ]
 }

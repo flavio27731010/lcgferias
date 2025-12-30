@@ -5,7 +5,6 @@ import {
   onSnapshotsInSync
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-/* ================= CONFIG ================= */
 const firebaseConfig = {
   apiKey: "SUA_API_KEY",
   authDomain: "feriaslcg.firebaseapp.com",
@@ -15,57 +14,33 @@ const firebaseConfig = {
   appId: "SEU_APP_ID"
 };
 
-/* ================= INIT ================= */
 const app = initializeApp(firebaseConfig);
 
-/* ================= FIRESTORE (NOVO MODELO) ================= */
 const db = initializeFirestore(app, {
   localCache: persistentLocalCache()
 });
 
-/* 🔓 DISPONIBILIZA GLOBALMENTE */
 window.db = db;
 
-console.log("🔥 Firebase conectado com sucesso");
-console.log("📴 Firestore Offline Sync ATIVO (novo modelo)");
+console.log("🔥 Firebase conectado");
+console.log("📴 Firestore Offline Sync ativo");
 
-/* ================= INDICADOR VISUAL ================= */
 window.addEventListener("DOMContentLoaded", () => {
+  const el = document.getElementById("status-connection");
 
-  let statusEl = document.getElementById("status-connection");
+  const set = (c, t) => {
+    el.className = "status " + c;
+    el.textContent = t;
+  };
 
-  if (!statusEl) {
-    statusEl = document.createElement("div");
-    statusEl.id = "status-connection";
-    statusEl.className = "status online";
-    statusEl.textContent = "🟢 Online";
-    document.body.appendChild(statusEl);
-  }
+  set(navigator.onLine ? "online" : "offline",
+      navigator.onLine ? "🟢 Online" : "🔴 Offline");
 
-  function setStatus(type, text) {
-    statusEl.className = `status ${type}`;
-    statusEl.textContent = text;
-  }
-
-  setStatus(
-    navigator.onLine ? "online" : "offline",
-    navigator.onLine ? "🟢 Online" : "🔴 Offline"
-  );
-
-  window.addEventListener("online", () => {
-    setStatus("online", "🟢 Online");
-  });
-
-  window.addEventListener("offline", () => {
-    setStatus("offline", "🔴 Offline");
-  });
+  window.addEventListener("online", () => set("online", "🟢 Online"));
+  window.addEventListener("offline", () => set("offline", "🔴 Offline"));
 
   onSnapshotsInSync(db, () => {
-    if (navigator.onLine) {
-      setStatus("online", "🟢 Sincronizado");
-    } else {
-      setStatus("sync", "🟡 Dados locais");
-    }
+    if (navigator.onLine) set("online", "🟢 Sincronizado");
+    else set("sync", "🟡 Dados locais");
   });
-
 });
