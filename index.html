@@ -2,6 +2,8 @@
 <html lang="pt-BR">
 <head>
 
+<link rel="icon" href="icon-192.png">
+
 <!-- PWA -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0d47a1">
@@ -198,11 +200,44 @@ tr:hover {
     }
 }
 
+.status {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  z-index: 9999;
+  box-shadow: 0 4px 10px rgba(0,0,0,.15);
+  transition: background .3s, transform .3s;
+}
+
+.status.online {
+  background: #2e7d32;
+}
+
+.status.offline {
+  background: #c62828;
+}
+
+.status.sync {
+  background: #f9a825;
+  color: #000;
+}
+
+
 </style>
 
 </head>
 
 <body>
+
+  <!-- 🔔 Indicador de conexão -->
+  <div id="status-connection" class="status online">
+    🟢 Online
+  </div>
 
 <h2>CONTROLE DE FÉRIAS</h2>
 
@@ -634,6 +669,10 @@ if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("sw.js");
 }
 </script>
+
+<!-- Firebase moderno -->
+<script type="module" src="firebase.js"></script>
+
 
 </body>
 </html>
